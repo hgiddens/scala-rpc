@@ -4,6 +4,7 @@ object Dependencies {
   val fullScalaVersion = "2.12.6"
   val jacksonVersion = "2.9.4"
 
+  val shapeless = "com.chuusai" %% "shapeless" % "2.3.3"
   val slf4jApi = "org.slf4j" % "slf4j-api" % "1.7.25"
   val reactor = "io.projectreactor" % "reactor-core" % "3.1.5.RELEASE"
   val reactorNetty = "io.projectreactor.ipc" % "reactor-netty" % "0.7.5.RELEASE"

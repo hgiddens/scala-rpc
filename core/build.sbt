@@ -5,5 +5,6 @@ libraryDependencies ++= Seq(
   jackson,
   jacksonScala,
   slf4jApi,
-  reactor
+  reactor,
+  shapeless
 )

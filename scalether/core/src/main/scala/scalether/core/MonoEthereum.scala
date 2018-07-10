@@ -10,6 +10,7 @@ import reactor.core.publisher.Mono
 import scalether.domain.request.{LogFilter, Transaction}
 import scalether.domain.response.{Block, Log, TransactionReceipt}
 import scalether.domain.{Address, response}
+import shapeless.HList
 
 import scala.collection.JavaConverters._
 
@@ -85,7 +86,7 @@ class MonoEthereum(transport: MonoRpcTransport)
   override def ethEstimateGas(transaction: Transaction, defaultBlockParameter: String): Mono[BigInteger] =
     super.ethEstimateGas(transaction, defaultBlockParameter)
 
-  override def exec[T](method: String, params: Any*)(implicit mf: Manifest[T]): Mono[T] = super.exec(method, params:_*)
+  override def exec[T](method: String, params: HList)(implicit mf: Manifest[T]): Mono[T] = super.exec(method, params)
 
-  override def execOption[T](method: String, params: Any*)(implicit mf: Manifest[T]): Mono[Option[T]] = super.execOption(method, params:_*)
+  override def execOption[T](method: String, params: HList)(implicit mf: Manifest[T]): Mono[Option[T]] = super.execOption(method, params)
 }

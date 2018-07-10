@@ -5,6 +5,7 @@ import java.math.BigInteger
 import io.daonomic.cats.MonadThrowable
 import io.daonomic.rpc.RpcTransport
 import scalether.domain.response.parity.Trace
+import shapeless.HNil
 
 import scala.language.higherKinds
 
@@ -13,11 +14,11 @@ class Parity[F[_]](transport: RpcTransport[F])
   extends EthereumRpcClient[F](transport) {
 
   def traceTransaction(txHash: String): F[List[Trace]] = {
-    exec("trace_transaction", txHash)
+    exec("trace_transaction", txHash :: HNil)
   }
 
   def traceBlock(blockNumber: BigInteger): F[List[Trace]] = {
-    exec("trace_block", blockNumber)
+    exec("trace_block", blockNumber :: HNil)
   }
 
 }

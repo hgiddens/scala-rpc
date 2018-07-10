@@ -9,8 +9,8 @@ import reactor.core.publisher.Mono
 
 class MonoBitcoind(transport: MonoRpcTransport) extends Bitcoind[Mono](transport) {
 
-  override def help(what: String*): Mono[String] =
-    super.help(what:_*)
+  override def help: Mono[String] =
+    super.help
 
   override def getBlockCount: Mono[BigInteger] =
     super.getBlockCount

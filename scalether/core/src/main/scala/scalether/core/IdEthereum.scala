@@ -10,6 +10,7 @@ import scalether.domain.Address
 import scalether.domain.request.{LogFilter, Transaction}
 import scalether.domain.response
 import scalether.domain.response.{Block, Log, TransactionReceipt}
+import shapeless.HList
 
 class IdEthereum(transport: IdRpcTransport) extends Ethereum[Id](transport) {
   @throws[RpcException]
@@ -76,8 +77,8 @@ class IdEthereum(transport: IdRpcTransport) extends Ethereum[Id](transport) {
   override def ethGetCode(address: Address, defaultBlockParameter: String): Binary = super.ethGetCode(address, defaultBlockParameter)
 
   @throws[RpcException]
-  override def exec[T](method: String, params: Any*)(implicit mf: Manifest[T]): T = super.exec(method, params:_*)
+  override def exec[T](method: String, params: HList)(implicit mf: Manifest[T]): T = super.exec(method, params)
 
   @throws[RpcException]
-  override def execOption[T](method: String, params: Any*)(implicit mf: Manifest[T]): Option[T] = super.execOption(method, params:_*)
+  override def execOption[T](method: String, params: HList)(implicit mf: Manifest[T]): Option[T] = super.execOption(method, params)
 }

@@ -4,6 +4,7 @@ import cats.implicits._
 import io.daonomic.cats.MonadThrowable
 import io.daonomic.rpc.domain.{Error, Request, Response, StatusAndBody}
 import org.slf4j.{Logger, LoggerFactory}
+import shapeless.HList
 
 import scala.language.higherKinds
 import scala.reflect.Manifest
@@ -21,17 +22,17 @@ class RpcHttpClient[F[_]](jsonConverter: JsonConverter, transport: RpcTransport[
     transport.get(url).flatMap(response => parseResponse(response, url))
   }
 
-  def exec[T](method: String, params: Any*)
+  def exec[T](method: String, params: HList)
              (implicit mf: Manifest[T]): F[T] = {
-    execOption[T](method, params: _*).flatMap {
+    execOption[T](method, params).flatMap {
       case Some(v) => me.pure(v)
       case None => me.raiseError(new RpcCodeException(Error.default))
     }
   }
 
-  def execOption[T](method: String, params: Any*)
+  def execOption[T](method: String, params: HList)
                    (implicit mf: Manifest[T]): F[Option[T]] = {
-    execute[T](Request(1, method, params: _*)).flatMap {
+    execute[T](Request(1, method, params.runtimeList: _*)).flatMap {
       response =>
         response.error match {
           case Some(r) => me.raiseError(new RpcCodeException(r))

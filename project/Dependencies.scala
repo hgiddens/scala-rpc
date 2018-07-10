@@ -3,6 +3,7 @@ import sbt._
 object Dependencies {
   val fullScalaVersion = "2.12.6"
   val jacksonVersion = "2.9.4"
+  val circeVersion = "0.9.3"
 
   val slf4jApi = "org.slf4j" % "slf4j-api" % "1.7.25"
   val reactor = "io.projectreactor" % "reactor-core" % "3.1.5.RELEASE"
@@ -13,6 +14,9 @@ object Dependencies {
 
   val jackson = "com.fasterxml.jackson.core" % "jackson-databind" % jacksonVersion
   val jacksonScala = "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion
+
+  val circeCore = "io.circe" %% "circe-core" % circeVersion
+  val circeParser = "io.circe" %% "circe-parser" % circeVersion
 
   val scalaTest = "org.scalatest" %% "scalatest" % "3.0.4"
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.13.5"

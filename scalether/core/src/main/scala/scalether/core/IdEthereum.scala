@@ -4,6 +4,7 @@ import java.math.BigInteger
 
 import io.daonomic.cats.implicits._
 import cats.Id
+import io.circe.{Decoder, Json}
 import io.daonomic.rpc.domain.{Binary, Word}
 import io.daonomic.rpc.{IdRpcTransport, RpcException}
 import scalether.domain.Address
@@ -76,8 +77,8 @@ class IdEthereum(transport: IdRpcTransport) extends Ethereum[Id](transport) {
   override def ethGetCode(address: Address, defaultBlockParameter: String): Binary = super.ethGetCode(address, defaultBlockParameter)
 
   @throws[RpcException]
-  override def exec[T](method: String, params: Any*)(implicit mf: Manifest[T]): T = super.exec(method, params:_*)
+  override def exec[T: Decoder](method: String, params: Json*): T = super.exec(method, params:_*)
 
   @throws[RpcException]
-  override def execOption[T](method: String, params: Any*)(implicit mf: Manifest[T]): Option[T] = super.execOption(method, params:_*)
+  override def execOption[T: Decoder](method: String, params: Json*): Option[T] = super.execOption(method, params:_*)
 }

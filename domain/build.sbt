@@ -1,1 +1,7 @@
-libraryDependencies += Dependencies.jackson
+import Dependencies._
+
+libraryDependencies ++= Seq(
+  jackson,
+  circeCore,
+  circeGeneric
+)

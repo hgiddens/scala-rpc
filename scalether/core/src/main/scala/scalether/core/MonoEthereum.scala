@@ -3,6 +3,7 @@ package scalether.core
 import java.math.BigInteger
 import java.util
 
+import io.circe.{Decoder, Json}
 import io.daonomic.cats.implicits._
 import io.daonomic.rpc.MonoRpcTransport
 import io.daonomic.rpc.domain.{Binary, Word}
@@ -85,7 +86,7 @@ class MonoEthereum(transport: MonoRpcTransport)
   override def ethEstimateGas(transaction: Transaction, defaultBlockParameter: String): Mono[BigInteger] =
     super.ethEstimateGas(transaction, defaultBlockParameter)
 
-  override def exec[T](method: String, params: Any*)(implicit mf: Manifest[T]): Mono[T] = super.exec(method, params:_*)
+  override def exec[T: Decoder](method: String, params: Json*): Mono[T] = super.exec(method, params:_*)
 
-  override def execOption[T](method: String, params: Any*)(implicit mf: Manifest[T]): Mono[Option[T]] = super.execOption(method, params:_*)
+  override def execOption[T: Decoder](method: String, params: Json*): Mono[Option[T]] = super.execOption(method, params:_*)
 }

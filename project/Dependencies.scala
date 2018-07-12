@@ -16,6 +16,7 @@ object Dependencies {
   val jacksonScala = "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion
 
   val circeCore = "io.circe" %% "circe-core" % circeVersion
+  val circeGeneric = "io.circe" %% "circe-generic" % circeVersion
   val circeParser = "io.circe" %% "circe-parser" % circeVersion
 
   val scalaTest = "org.scalatest" %% "scalatest" % "3.0.4"

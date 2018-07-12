@@ -1,5 +1,8 @@
 package scalether.domain.request
 
+import io.circe.Encoder
+import io.circe.generic.semiauto._
+import io.circe.syntax._
 import io.daonomic.rpc.domain.Word
 import scalether.domain.Address
 
@@ -19,6 +22,9 @@ case class LogFilter(topics: List[TopicFilter] = Nil,
 
 object LogFilter {
   @varargs def apply(topics: TopicFilter*): LogFilter = LogFilter(topics.toList)
+
+  implicit def encoder: Encoder[LogFilter] =
+    deriveEncoder
 }
 
 sealed trait TopicFilter {
@@ -28,6 +34,12 @@ sealed trait TopicFilter {
 object TopicFilter {
   implicit def simple(word: Word): SimpleTopicFilter = SimpleTopicFilter(word)
   @varargs def or(word: Word*): OrTopicFilter = OrTopicFilter(word.toList)
+
+  implicit def encoder: Encoder[TopicFilter] =
+    Encoder.instance {
+      case SimpleTopicFilter(word) => word.toString.asJson
+      case OrTopicFilter(words) => words.map(_.toString).asJson
+    }
 }
 
 case class SimpleTopicFilter(word: Word) extends TopicFilter

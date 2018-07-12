@@ -5,7 +5,7 @@ import java.math.BigInteger
 import io.circe.syntax._
 import io.daonomic.cats.MonadThrowable
 import io.daonomic.rpc.RpcTransport
-import scalether.core.ParityCirceCodec._
+import scalether.domain.json.CirceCodec._
 import scalether.domain.response.parity.Trace
 
 import scala.language.higherKinds

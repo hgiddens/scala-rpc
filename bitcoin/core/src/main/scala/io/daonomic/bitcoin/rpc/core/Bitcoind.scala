@@ -4,7 +4,6 @@ import java.math.BigInteger
 
 import cats.implicits._
 import io.circe.syntax._
-import io.daonomic.bitcoin.rpc.core.BitcoinCirceCodec._
 import io.daonomic.bitcoin.rpc.domain._
 import io.daonomic.cats.MonadThrowable
 import io.daonomic.rpc.{RpcHttpClient, RpcTransport}

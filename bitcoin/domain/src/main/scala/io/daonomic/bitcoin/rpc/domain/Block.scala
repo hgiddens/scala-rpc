@@ -1,5 +1,8 @@
 package io.daonomic.bitcoin.rpc.domain
 
+import io.circe.Decoder
+import io.circe.generic.semiauto._
+
 case class Block[T](hash: String,
                     confirmations: Long,
                     strippedsize: Long,
@@ -18,3 +21,7 @@ case class Block[T](hash: String,
                     chainwork: String,
                     previousblockhash: String,
                     nextblockhash: String)
+object Block {
+  implicit def decoder[T: Decoder]: Decoder[Block[T]] =
+    deriveDecoder
+}

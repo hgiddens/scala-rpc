@@ -2,8 +2,11 @@ package scalether.domain.response
 
 import java.math.BigInteger
 
+import io.circe.Decoder
+import io.circe.generic.semiauto._
 import io.daonomic.rpc.domain.{Binary, Word}
 import scalether.domain.Address
+import scalether.domain.json.CirceCodec._
 
 case class Block(number: BigInteger,
                  hash: Word,
@@ -22,3 +25,7 @@ case class Block(number: BigInteger,
                  gasUsed: BigInteger,
                  transactions: List[Word],
                  timestamp: BigInteger)
+object Block {
+  implicit def decoder: Decoder[Block] =
+    deriveDecoder
+}

@@ -1,11 +1,9 @@
 package io.daonomic.rpc.domain
 
-import com.fasterxml.jackson.databind.annotation.{JsonDeserialize, JsonSerialize}
-import io.daonomic.rpc.domain.jackson.{BinaryDeserializer, BinarySerializer}
+import io.circe.{Decoder, Encoder}
+import io.circe.syntax._
 import scalether.util.Hex
 
-@JsonSerialize(using = classOf[BinarySerializer])
-@JsonDeserialize(using = classOf[BinaryDeserializer])
 case class Binary(bytes: Array[Byte]) extends Bytes
 
 object Binary {
@@ -18,4 +16,12 @@ object Binary {
 
   def apply(hex: String): Binary =
     if (hex == null) new Binary(Array()) else new Binary(Hex.toBytes(hex))
+
+  implicit def decoder: Decoder[Binary] =
+    Decoder.instance(_.as[String]).map(_.trim).map(Binary(_))
+
+  implicit def encoder: Encoder[Binary] =
+    Encoder.instance { bytes: Array[Byte] =>
+      Hex.prefixed(bytes).asJson
+    }.contramap(_.bytes)
 }

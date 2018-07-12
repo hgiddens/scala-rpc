@@ -2,14 +2,12 @@ package scalether.domain
 
 import java.nio.charset.StandardCharsets
 
-import com.fasterxml.jackson.databind.annotation.{JsonDeserialize, JsonSerialize}
+import io.circe.{Decoder, Encoder}
+import io.circe.syntax._
 import io.daonomic.rpc.domain.{Binary, Bytes}
 import org.web3j.crypto.Hash
-import scalether.domain.jackson.{AddressDeserializer, AddressSerializer}
 import scalether.util.Hex
 
-@JsonSerialize(using = classOf[AddressSerializer])
-@JsonDeserialize(using = classOf[AddressDeserializer])
 case class Address(bytes: Array[Byte]) extends Bytes {
   assert(bytes.length == 20)
 
@@ -33,4 +31,12 @@ object Address {
 
   def apply(binary: Binary): Address =
     new Address(binary.bytes)
+
+  implicit def decoder: Decoder[Address] =
+    Decoder.instance(_.as[String]).map(_.trim).map(Address(_))
+
+  implicit def encoder: Encoder[Address] =
+    Encoder.instance { bytes: Array[Byte] =>
+      Hex.prefixed(bytes).asJson
+    }.contramap(_.bytes)
 }

@@ -6,7 +6,7 @@ import io.circe.syntax._
 import io.daonomic.cats.MonadThrowable
 import io.daonomic.rpc.RpcTransport
 import io.daonomic.rpc.domain.{Binary, Word}
-import scalether.core.EthereumCirceCodec._
+import scalether.domain.json.CirceCodec._
 import scalether.domain.request._
 import scalether.domain.response.{Block, Log, TransactionReceipt}
 import scalether.domain.{Address, response}

@@ -53,7 +53,7 @@ class RpcHttpClient[F[_]](transport: RpcTransport[F])(implicit me: MonadThrowabl
     }
 
     def wrapError[A](e: Throwable): Throwable =
-      new IllegalArgumentException(s"unable to parse response json. http status code=${response.code} request=$request", e)
+      new IllegalArgumentException(s"unable to parse response json. http status code=${response.code} request=$request response=${response.body}", e)
 
     me.fromEither(for {
       json <- parse(response.body).left.map(wrapError)

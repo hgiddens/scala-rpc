@@ -6,6 +6,11 @@ scalaVersion := fullScalaVersion
 
 parallelExecution in ThisBuild := false
 
+dependencyOverrides in ThisBuild := Seq(
+  // Circe 0.9.3 depends on 1.0 rather than 1.1.
+  "org.typelevel" %% "cats-core" % "1.1.0"
+)
+
 //common rpc
 lazy val `test-common` = project.common.tests("compile")
   .dependsOn(`scalether-domain`)
